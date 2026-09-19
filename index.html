@@ -454,6 +454,46 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
 }
 .btn:hover { background: rgba(255, 255, 255, 0.15); box-shadow: 0 0 3rem rgba(255, 210, 210, 0.6); transform: translateY(-2px); }
 
+/* ───────── LIGHTBOX (In-Page Gallery Function) ───────── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(10, 1, 3, 0.94);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; visibility: hidden; transition: opacity 0.4s, visibility 0.4s;
+}
+.lightbox.active { opacity: 1; visibility: visible; }
+.lb-content { position: relative; max-width: 90vw; max-height: 85vh; text-align: center; }
+.lb-content img {
+  max-width: 100%; max-height: 80vh; object-fit: contain;
+  border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 0 40px rgba(255, 77, 109, 0.4), 0 0 80px rgba(0,0,0,0.8);
+  animation: lbZoom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.2s;
+}
+.lb-content p { 
+  color: var(--text-pearl); margin-top: 1.2rem; 
+  font-family: var(--font-latin); font-style: italic; font-size: 1.1rem; 
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+.lb-btn {
+  position: absolute; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; width: 3.5rem; height: 3.5rem; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+  transition: all 0.3s; backdrop-filter: blur(4px); z-index: 9001;
+}
+.lb-btn:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.6); box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+.lb-close { top: 2rem; right: 2rem; font-size: 2rem; }
+.lb-prev { left: 2rem; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 2rem; top: 50%; transform: translateY(-50%); }
+
+@keyframes lbZoom { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@media (max-width: 600px) {
+  .lb-prev { left: 1rem; width: 2.8rem; height: 2.8rem; font-size: 1.4rem; } 
+  .lb-next { right: 1rem; width: 2.8rem; height: 2.8rem; font-size: 1.4rem; } 
+  .lb-close { top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; font-size: 1.6rem; }
+}
+
 /* ───────── Animations & Reveals ───────── */
 .js .rv { opacity: 0; filter: blur(10px) brightness(1.5); transition: opacity 1.4s ease, filter 1.6s ease; }
 .js .rv.in { opacity: 1; filter: none; }
@@ -785,6 +825,17 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
   </div>
 </footer>
 
+<!-- ══════ LIGHTBOX MODAL ══════ -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-btn lb-close" aria-label="ปิด">×</button>
+  <button class="lb-btn lb-prev" aria-label="ก่อนหน้า">‹</button>
+  <button class="lb-btn lb-next" aria-label="ถัดไป">›</button>
+  <div class="lb-content">
+    <img id="lb-img" src="" alt="">
+    <p id="lb-caption"></p>
+  </div>
+</div>
+
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -830,7 +881,6 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
     body.classList.remove('is-ready');
     loader.classList.remove('is-done', 'flash');
     
-    // Trigger animations
     requestAnimationFrame(() => {
       loader.classList.add('active');
     });
@@ -881,7 +931,6 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
     runIntro();
   });
 
-  // Start loader
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', runIntro);
   } else {
@@ -909,7 +958,6 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
   let st = false;
   
   const onScroll = () => {
-    const h = document.documentElement.scrollHeight - window.innerHeight;
     let cur = 'top';
     secs.forEach(s => {
       if (s && s.getBoundingClientRect().top < window.innerHeight * 0.4) cur = s.id;
@@ -1028,17 +1076,72 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
     upd();
   }
 
-  // ── Gallery Lightbox ──
+  // ── Gallery Lightbox (In-Page Function) ──
   const figs = $$('#gal figure');
   if (figs.length > 0) {
-    // Simple click to open in new tab for elegance and simplicity
-    figs.forEach(f => {
-      f.addEventListener('click', () => {
-        const img = f.querySelector('img');
-        if (img && img.src) {
-          window.open(img.src, '_blank');
+    const lightbox = $('#lightbox');
+    const lbImg = $('#lb-img');
+    const lbCaption = $('#lb-caption');
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      const img = figs[currentIndex].querySelector('img');
+      lbImg.style.opacity = 0;
+      setTimeout(() => {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lbCaption.textContent = `${img.alt} (${currentIndex + 1} / ${figs.length})`;
+        lbImg.style.opacity = 1;
+      }, 150);
+      lightbox.classList.add('active');
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      setTimeout(() => { 
+        lightbox.hidden = true; 
+        document.body.style.overflow = ''; 
+      }, 400);
+    }
+
+    function showImage(index) {
+      currentIndex = (index + figs.length) % figs.length;
+      const img = figs[currentIndex].querySelector('img');
+      lbImg.style.opacity = 0;
+      setTimeout(() => {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lbCaption.textContent = `${img.alt} (${currentIndex + 1} / ${figs.length})`;
+        lbImg.style.opacity = 1;
+      }, 150);
+    }
+
+    figs.forEach((fig, index) => {
+      fig.addEventListener('click', () => openLightbox(index));
+      fig.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { 
+          e.preventDefault(); 
+          openLightbox(index); 
         }
       });
+    });
+
+    $('.lb-close').addEventListener('click', closeLightbox);
+    $('.lb-prev').addEventListener('click', () => showImage(currentIndex - 1));
+    $('.lb-next').addEventListener('click', () => showImage(currentIndex + 1));
+    
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden || !lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+      if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
     });
   }
 })();
