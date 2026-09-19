@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="th" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>พิทักษ์ทอง บานันหยาน · สงครามแห่งศรัทธา</title>
+<meta name="theme-color" content="#1a0508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Serif+Thai:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.className='js'</script>
+<style>
+/* ───────── Tokens & Base ───────── */
+:root {
+  --bg-deep: #0a0103;
+  --bg-rich: #1a0508;
+  --bg-crimson: #2d0a10;
+  --accent-red: #ff4d6d;
+  --glow-white: rgba(255, 255, 255, 0.95);
+  --glow-red: rgba(255, 77, 109, 0.6);
+  --text-pearl: rgba(255, 244, 240, 0.92);
+  --text-mist: rgba(255, 232, 226, 0.65);
+  --font-th: "Noto Serif Thai", "Sarabun", serif;
+  --font-display: "Chonburi", "Noto Serif Thai", serif;
+  --font-latin: "Cormorant Garamond", "Noto Serif Thai", Georgia, serif;
+  --glow-text: 0 0 0.05em #fff, 0 0 0.4em rgba(255,255,255,0.6), 0 0 1.2em rgba(255,120,130,0.7), 0 0 2.8em rgba(230,40,70,0.6);
+}
+* { box-sizing: border-box; }
+html {
+  font-size: clamp(15px, 0.4vw + 12px, 28px);
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg-deep);
+  color: var(--text-pearl);
+  font-family: var(--font-th);
+  font-weight: 400;
+  line-height: 1.8;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+body.is-loading { overflow: hidden; }
+img { max-width: 100%; display: block; }
+p { margin: 0; text-wrap: pretty; }
+::selection { background: rgba(255, 255, 255, 0.9); color: #3a0610; }
+
+/* ───────── Luxurious Background Atmosphere ───────── */
+.bg-gradient {
+  position: fixed; inset: 0; z-index: -4;
+  background: 
+    radial-gradient(80% 60% at 50% -10%, rgba(255, 77, 109, 0.4), transparent 60%),
+    radial-gradient(70% 50% at 10% 50%, rgba(143, 20, 36, 0.4), transparent 65%),
+    radial-gradient(70% 50% at 90% 80%, rgba(143, 20, 36, 0.35), transparent 65%),
+    linear-gradient(180deg, var(--bg-crimson) 0%, var(--bg-rich) 40%, var(--bg-deep) 100%);
+}
+.velvet-overlay {
+  position: fixed; inset: 0; z-index: -3; opacity: 0.4; pointer-events: none;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0) 2rem, rgba(255,120,120,0.04) 3rem, rgba(0,0,0,0.3) 5rem);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 90%);
+  mask-image: linear-gradient(180deg, #000, transparent 90%);
+}
+.rays {
+  position: fixed; z-index: -2; left: 50%; top: -60vmax; width: 150vmax; height: 150vmax;
+  translate: -50% 0; pointer-events: none; mix-blend-mode: screen; opacity: 0.35;
+  background: repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,240,235,0) 0deg, rgba(255,240,235,0.12) 3deg, rgba(255,240,235,0) 8deg, rgba(255,240,235,0) 20deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 60%);
+  mask-image: radial-gradient(circle, #000 0%, transparent 60%);
+  animation: spin 180s linear infinite;
+}
+#embers { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.vignette {
+  position: fixed; inset: 0; z-index: 57; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 50%, rgba(10, 1, 3, 0.8) 100%);
+}
+.grain {
+  position: fixed; inset: 0; z-index: 58; pointer-events: none; opacity: 0.06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ───────── FIERCE LOADER (4K Luxurious) ───────── */
+#loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: radial-gradient(circle at 50% 40%, #2a0a10 0%, #0d0204 50%, #000000 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.2s;
+}
+#loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.loader-content {
+  position: relative; width: 100%; max-width: 1100px; height: 55vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.eyes-center {
+  position: relative; z-index: 2; width: clamp(220px, 38vw, 480px);
+  filter: drop-shadow(0 0 30px rgba(255, 200, 200, 0.7)) drop-shadow(0 0 80px rgba(255, 50, 80, 0.5));
+  animation: eyeBreathe 4s ease-in-out infinite;
+}
+.eyes-center img { width: 100%; height: auto; display: block; }
+
+.hand {
+  position: absolute; top: 50%; height: clamp(160px, 32vw, 420px); width: auto;
+  z-index: 3; filter: drop-shadow(0 0 20px rgba(255, 200, 200, 0.6));
+  transition: all 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hand img { height: 100%; width: auto; display: block; }
+.left-hand { left: 8%; transform: translateY(-50%) translateX(-200px); opacity: 0; }
+.right-hand { right: 8%; transform: translateY(-50%) translateX(200px) scaleX(-1); opacity: 0; }
+
+#loader.active .left-hand { transform: translateY(-50%) translateX(0); opacity: 1; }
+#loader.active .right-hand { transform: translateY(-50%) translateX(0) scaleX(-1); opacity: 1; }
+
+.loader-progress {
+  position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%);
+  width: clamp(320px, 65vw, 650px); text-align: center; z-index: 4;
+}
+.progress-text {
+  font-family: var(--font-latin); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 600;
+  color: #fff; 
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 50px rgba(255, 100, 120, 0.7);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.1em; margin-bottom: 0.8rem;
+}
+.progress-text small { font-size: 0.45em; opacity: 0.7; font-weight: 400; }
+
+.progress-line {
+  width: 100%; height: 2px; background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px; overflow: visible; position: relative;
+}
+.progress-fill {
+  height: 100%; width: 0%; 
+  background: linear-gradient(90deg, var(--accent-red), #ffffff);
+  box-shadow: 0 0 15px var(--accent-red), 0 0 35px rgba(255, 255, 255, 0.9);
+  transition: width 0.1s linear; border-radius: 2px;
+}
+.progress-glow {
+  position: absolute; top: 50%; right: 0; transform: translate(50%, -50%);
+  width: 6px; height: 6px; background: #fff; border-radius: 50%;
+  box-shadow: 0 0 10px 2px #fff, 0 0 25px 6px var(--accent-red);
+  opacity: 0; transition: opacity 0.3s;
+}
+#loader.active .progress-glow { opacity: 1; }
+
+.loading-hint {
+  margin-top: 1.2rem; font-family: var(--font-th); font-size: 0.85rem;
+  color: var(--text-mist); letter-spacing: 0.25em; animation: hintPulse 2.5s infinite;
+}
+
+.loader-flash {
+  position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, #fff, rgba(255,200,200,0.8) 40%, transparent 70%);
+  opacity: 0; pointer-events: none; z-index: 10;
+}
+#loader.flash .loader-flash { animation: flashBang 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+#loader.flash .loader-content, #loader.flash .loader-progress { animation: zoomOut 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+/* ───────── Navigation ───────── */
+.nav {
+  position: fixed; top: max(1rem, env(safe-area-inset-top)); left: 50%; translate: -50% 0;
+  z-index: 80; display: flex; gap: 0.2rem; padding: 0.4rem; border-radius: 999px;
+  background: rgba(26, 5, 8, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 232, 226, 0.15);
+  max-width: calc(100vw - 2rem); overflow-x: auto; scrollbar-width: none;
+  box-shadow: 0 10px 40px -10px #000, 0 0 30px -8px rgba(255, 77, 109, 0.3);
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  color: var(--text-mist); text-decoration: none; font-size: 0.85rem; line-height: 1;
+  padding: 0.6rem 1.1rem; border-radius: 999px; white-space: nowrap; transition: all 0.3s;
+}
+.nav a:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+.nav a.on { color: #fff; background: rgba(255, 255, 255, 0.1); text-shadow: 0 0 12px rgba(255,255,255,0.8); }
+.js .nav { opacity: 0; pointer-events: none; transition: opacity 1s 1s; }
+.js .is-ready .nav { opacity: 1; pointer-events: auto; }
+
+/* ───────── Hero Section ───────── */
+.hero {
+  position: relative; min-height: 100svh; display: grid; align-items: center;
+  padding-block: clamp(6rem, 10vw, 10rem) clamp(4rem, 6vw, 8rem); overflow: clip;
+}
+.deco {
+  pointer-events: none; mix-blend-mode: screen; 
+  -webkit-mask-image: radial-gradient(ellipse closest-side, #000 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse closest-side, #000 70%, transparent 100%);
+}
+.deco.top {
+  position: absolute; top: -5%; left: 50%; translate: -50% 0; width: min(96vw, 80rem);
+  max-height: 45vh; object-fit: contain; opacity: 0.7; z-index: 0;
+}
+.hero-grid {
+  position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2.5rem, 6vw, 8rem); align-items: center; width: min(100% - 2*2rem, 88rem); margin-inline: auto;
+}
+.kicker {
+  font-family: var(--font-latin); font-style: italic; font-size: clamp(1.1rem, 0.9rem + 0.5vw, 1.6rem);
+  color: var(--text-mist); display: flex; gap: 0.8rem; align-items: center;
+}
+.war {
+  font-size: clamp(1rem, 0.85rem + 0.5vw, 1.5rem); margin-top: 0.4rem; color: #fff;
+  text-shadow: 0 0 1em rgba(255, 140, 150, 0.8); letter-spacing: 0.15em;
+}
+.name {
+  font-family: var(--font-display); font-weight: 400; font-size: clamp(2.8rem, 1.2rem + 5vw, 8rem);
+  line-height: 1.2; margin: 1rem 0 0.2rem; color: #fff; text-shadow: var(--glow-text);
+}
+.name-en {
+  font-family: var(--font-latin); font-style: italic; font-weight: 400;
+  font-size: clamp(1.4rem, 1rem + 1vw, 2.4rem); color: var(--text-pearl);
+  text-shadow: 0 0 1em rgba(255,255,255,0.4); line-height: 1.3;
+}
+.hero-quote {
+  margin: clamp(1.5rem, 2.5vw, 3rem) 0 0; padding-left: 1.5rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: -8px 0 25px -12px rgba(255, 255, 255, 0.8);
+  font-size: clamp(1.1rem, 0.9rem + 0.6vw, 1.7rem); line-height: 1.7; color: #fff;
+  text-shadow: 0 0 1.2em rgba(255, 150, 160, 0.7);
+}
+.chips {
+  list-style: none; margin: clamp(1.5rem, 2.5vw, 3rem) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.7rem;
+}
+.chips li {
+  padding: 0.2rem 1.2rem; border: 1px solid rgba(255, 232, 226, 0.25); border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04); font-size: 0.9rem; line-height: 1.8; color: var(--text-pearl);
+  backdrop-filter: blur(4px);
+}
+.chips li b { font-weight: 600; color: #fff; text-shadow: 0 0 0.8em rgba(255,255,255,0.7); }
+
+.arch {
+  position: relative; justify-self: center; width: min(100%, 36rem); aspect-ratio: 3/4.2; margin: 0;
+}
+.arch-halo {
+  position: absolute; inset: -15%;
+  background: radial-gradient(closest-side, rgba(255, 236, 232, 0.4), rgba(255, 70, 90, 0.25) 45%, transparent 72%);
+  filter: blur(20px); animation: breathe 6s ease-in-out infinite;
+}
+.arch-frame {
+  position: absolute; inset: 0; border-radius: 999px 999px 1rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.5), 0 0 2rem rgba(255, 235, 230, 0.6), 0 0 6rem rgba(255, 60, 90, 0.4), inset 0 0 3rem rgba(255, 255, 255, 0.15);
+}
+.arch-in {
+  position: absolute; inset: 0.6rem; border-radius: 999px 999px 0.6rem 0.6rem;
+  overflow: hidden; background: linear-gradient(170deg, #7a1020, #26040b);
+}
+.arch-in img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+.arch-in::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 36%, rgba(255,255,255,0.35) 50%, transparent 64%);
+  translate: -130% 0; mix-blend-mode: overlay; animation: shine 8s 3s ease-in-out infinite;
+}
+
+/* ───────── Sections & Panels ───────── */
+.section { position: relative; padding-block: clamp(5rem, 10vw, 12rem); }
+.wrap { width: min(100% - 2*2rem, 88rem); margin-inline: auto; }
+.sec-head { text-align: center; margin-bottom: clamp(2.5rem, 5vw, 6rem); }
+.sec-title {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2rem, 1.2rem + 2.5vw, 4.5rem); line-height: 1.3; margin: 0;
+  color: #fff; text-shadow: var(--glow-text);
+}
+.sec-sub {
+  font-family: var(--font-latin); font-style: italic;
+  font-size: clamp(1.1rem, 0.9rem + 0.6vw, 1.8rem); color: var(--text-mist); margin-top: 0.2rem;
+}
+.flourish {
+  display: block; width: min(22rem, 70vw); height: auto; margin: 1rem auto 0; color: #fff;
+  filter: drop-shadow(0 0 8px rgba(255, 220, 220, 0.8));
+}
+.deco.mid {
+  display: block; width: min(88vw, 65rem); max-height: 35vh; object-fit: contain;
+  margin: 0 auto; opacity: 0.8; mix-blend-mode: screen;
+}
+
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(1.2rem, 2.5vw, 2.8rem); }
+.s12 { grid-column: span 12; } .s8 { grid-column: span 8; } .s7 { grid-column: span 7; }
+.s6 { grid-column: span 6; } .s5 { grid-column: span 5; } .s4 { grid-column: span 4; }
+@media(max-width: 60rem) { .s8, .s7, .s6, .s5, .s4 { grid-column: span 12; } }
+
+.panel {
+  position: relative; padding: clamp(1.6rem, 2.5vw, 3rem); border-radius: 0.4rem;
+  border: 1px solid rgba(255, 232, 226, 0.15);
+  background: linear-gradient(155deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01) 60%, rgba(0,0,0,0.2));
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 40px 90px -40px #000, 0 0 60px -20px rgba(255, 77, 109, 0.3), inset 0 0 60px rgba(255,255,255,0.02);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.panel h3 {
+  display: flex; align-items: center; gap: 0.8rem; margin: 0 0 1rem;
+  font-family: var(--font-display); font-weight: 400; font-size: 1.3rem; line-height: 1.4;
+  color: #fff; text-shadow: 0 0 0.8em rgba(255, 150, 160, 0.7);
+}
+.panel h3::before {
+  content: ""; flex: none; width: 0.5rem; height: 0.5rem; rotate: 45deg; background: #fff;
+  box-shadow: 0 0 1rem 0.1rem rgba(255, 220, 220, 0.9);
+}
+.panel p + p { margin-top: 0.9em; }
+.panel em {
+  font-family: var(--font-latin); font-style: italic; font-size: 1.2em; color: #fff;
+  text-shadow: 0 0 1em rgba(255, 160, 170, 0.8);
+}
+
+/* Menu / Info */
+.menu-panel { max-width: 60rem; margin-inline: auto; }
+.menu { margin: 0; display: grid; }
+.menu .row {
+  display: grid; grid-template-columns: auto minmax(1rem, 1fr) auto; align-items: baseline;
+  column-gap: 1rem; padding-block: 0.7rem; border-bottom: 1px solid rgba(255, 232, 226, 0.08);
+}
+.menu .row:last-child { border-bottom: 0; }
+.menu dt { color: var(--text-mist); font-size: 0.95rem; }
+.menu .lead { border-bottom: 1px dotted rgba(255, 232, 226, 0.3); translate: 0 -0.3em; }
+.menu dd { margin: 0; text-align: right; color: #fff; font-size: 1.1rem; text-shadow: 0 0 0.8em rgba(255,255,255,0.3); }
+.menu dd small { display: block; font-family: var(--font-latin); font-style: italic; font-size: 1rem; color: var(--text-mist); }
+.pill {
+  display: inline-block; padding: 0.1rem 1rem; border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px; box-shadow: 0 0 1.2rem rgba(255, 200, 200, 0.5), inset 0 0 1rem rgba(255,255,255,0.1);
+}
+
+/* Story Timeline */
+.pull {
+  margin: clamp(3rem, 6vw, 7rem) auto; max-width: 65rem; text-align: center;
+  font-family: var(--font-latin); font-style: italic; font-weight: 400;
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 3.5rem); line-height: 1.3; color: #fff;
+  text-shadow: var(--glow-text); position: relative;
+}
+.pull::before, .pull::after {
+  content: ""; display: block; width: min(16rem, 50vw); height: 1px; margin: 0 auto;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  box-shadow: 0 0 15px rgba(255, 220, 220, 0.9);
+}
+.pull::before { margin-bottom: 1.8rem; } .pull::after { margin-top: 1.8rem; }
+
+.timeline {
+  list-style: none; margin: clamp(3rem, 6vw, 6rem) 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.2rem, 2.5vw, 3rem);
+  position: relative;
+}
+.timeline::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0.6rem; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 240, 235, 0.8) 10%, rgba(255, 240, 235, 0.8) 90%, transparent);
+  box-shadow: 0 0 15px rgba(255, 200, 200, 0.7);
+}
+.timeline li { position: relative; padding-top: 2.5rem; }
+.timeline .node {
+  position: absolute; top: 0; left: 0; width: 1.2rem; height: 1.2rem; border-radius: 50%;
+  background: radial-gradient(circle, #fff 30%, rgba(255,255,255,0.2) 60%, transparent 72%);
+  box-shadow: 0 0 1.5rem 0.3rem rgba(255, 210, 210, 0.7);
+}
+.timeline li:last-child .node { animation: pulse 2.5s ease-in-out infinite; }
+.timeline h4 {
+  margin: 0 0 0.6rem; font-family: var(--font-display); font-weight: 400; font-size: 1.2rem;
+  color: #fff; text-shadow: 0 0 0.8em rgba(255, 150, 160, 0.7);
+}
+@media(max-width: 60rem) {
+  .timeline { grid-template-columns: 1fr; gap: 2rem; padding-left: 2.5rem; }
+  .timeline::before { left: 0.6rem; right: auto; top: 0; bottom: 0; width: 1px; height: auto; background: linear-gradient(180deg, transparent, rgba(255,240,235,0.8) 8%, rgba(255,240,235,0.8) 92%, transparent); }
+  .timeline li { padding-top: 0; } .timeline .node { left: -2.5rem; top: 0.5rem; }
+}
+
+/* Combat & Gauge */
+.wpn { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; }
+.icon { width: clamp(4rem, 6vw, 6.5rem); height: auto; color: #fff; filter: drop-shadow(0 0 0.6rem rgba(255,230,225,0.9)) drop-shadow(0 0 2rem rgba(255,60,90,0.7)); }
+.gauge { overflow: hidden; }
+.gauge-scene { position: relative; margin: 1.5rem 0 1rem; padding: 1rem 0 0; transition: filter 0.5s; }
+.ecg-win {
+  position: relative; height: 6rem; overflow: hidden;
+  border-top: 1px solid rgba(255, 232, 226, 0.12); border-bottom: 1px solid rgba(255, 232, 226, 0.12);
+  background: repeating-linear-gradient(90deg, rgba(255,232,226,0.04) 0 1px, transparent 1px 2rem), repeating-linear-gradient(0deg, rgba(255,232,226,0.04) 0 1px, transparent 1px 1.2rem);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.ecg {
+  position: absolute; left: 0; top: 0; width: 200%; height: 100%; fill: none; stroke: #fff;
+  stroke-width: 2; stroke-linejoin: round; stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(255,220,220,0.95)) drop-shadow(0 0 16px rgba(255,60,90,0.8));
+  animation: ecg var(--beat, 2.6s) linear infinite;
+}
+.gauge.shaky .gauge-scene { animation: tremble 0.16s linear infinite; }
+.gauge.faint .gauge-scene { filter: blur(3px) brightness(0.6); }
+.ctl {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.2rem;
+  margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-mist);
+}
+.ctl output { font-family: var(--font-latin); font-size: 1.6rem; color: #fff; min-width: 2.5ch; text-align: right; text-shadow: var(--glow-text); }
+input[type=range] {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 2rem; background: transparent; cursor: pointer;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, #fff var(--fill, 12%), rgba(255,232,226,0.2) var(--fill, 12%));
+  box-shadow: 0 0 10px rgba(255, 220, 220, 0.5);
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 1.3rem; height: 1.3rem; margin-top: calc(-0.65rem + 1.5px);
+  border-radius: 50%; background: #fff; border: 0;
+  box-shadow: 0 0 1rem 0.3rem rgba(255,230,225,0.95), 0 0 3rem 0.8rem rgba(255,60,90,0.6);
+}
+
+/* Gallery */
+.cap {
+  text-align: center; max-width: 55rem; margin: 0 auto clamp(1.8rem, 3.5vw, 3.5rem);
+  font-size: clamp(1.1rem, 0.9rem + 0.6vw, 1.6rem); line-height: 1.8; color: #fff;
+  text-shadow: 0 0 1.2em rgba(255, 150, 160, 0.7);
+}
+.gal {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+}
+.gal figure {
+  position: relative; margin: 0; overflow: hidden; border-radius: 0.4rem;
+  border: 1px solid rgba(255, 232, 226, 0.25);
+  background: linear-gradient(160deg, #5b0b17, #26040b);
+  box-shadow: 0 0 0 1px #000, 0 30px 70px -30px #000, 0 0 50px -14px rgba(255, 77, 109, 0.4);
+  cursor: zoom-in; aspect-ratio: 3/4; grid-column: span 3; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gal figure:first-child { grid-column: span 6; grid-row: span 2; aspect-ratio: auto; }
+.gal figure:hover, .gal figure:focus-visible {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 1px #000, 0 30px 70px -30px #000, 0 0 3rem rgba(255, 235, 230, 0.6), 0 0 6rem -6px rgba(255, 60, 90, 0.6);
+}
+.gal img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%;
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;
+}
+.gal figure:hover img { transform: scale(1.06); filter: brightness(1.1); }
+.gal figure::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 -8rem 6rem -3rem rgba(38,4,11,0.9), inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+@media(max-width: 48rem) {
+  .gal figure { grid-column: span 6; }
+  .gal figure:first-child { grid-column: span 12; grid-row: auto; aspect-ratio: 4/5; }
+}
+
+/* Rule Box */
+.rule {
+  max-width: 60rem; margin: clamp(3.5rem, 7vw, 7rem) auto 0; display: grid;
+  grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; padding: 1.5rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.6); border-radius: 0.4rem;
+  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+  box-shadow: 0 0 2.5rem rgba(255, 190, 190, 0.3), inset 0 0 2.5rem rgba(255,255,255,0.05);
+}
+.rule svg { width: 2.6rem; height: auto; color: #fff; filter: drop-shadow(0 0 0.6rem rgba(255,230,225,0.95)); }
+.rule b { font-weight: 600; color: #fff; text-shadow: 0 0 0.8em rgba(255,255,255,0.8); }
+
+/* Footer */
+footer { position: relative; padding: clamp(4rem, 8vw, 8rem) 0 clamp(4rem, 6vw, 6rem); text-align: center; }
+footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text-shadow: var(--glow-text); line-height: 1.6; }
+.btn {
+  margin-top: 2rem; font: inherit; font-size: 0.9rem; color: #fff;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px; padding: 0.7rem 2rem; cursor: pointer; letter-spacing: 0.1em;
+  box-shadow: 0 0 1.5rem rgba(255, 190, 190, 0.3); transition: all 0.4s;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.15); box-shadow: 0 0 3rem rgba(255, 210, 210, 0.6); transform: translateY(-2px); }
+
+/* ───────── Animations & Reveals ───────── */
+.js .rv { opacity: 0; filter: blur(10px) brightness(1.5); transition: opacity 1.4s ease, filter 1.6s ease; }
+.js .rv.in { opacity: 1; filter: none; }
+
+.js .hero-copy > *, .js .arch { opacity: 0; }
+.is-ready .hero-copy > * { animation: focusIn 1.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(var(--d, 0) * 1s); }
+.is-ready .arch { animation: archUp 2.2s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.is-ready .deco.top { animation: fade 2.8s 0.3s ease both; }
+
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes breathe { 0%, 100% { opacity: 0.7; scale: 1; } 50% { opacity: 1; scale: 1.05; } }
+@keyframes eyeBreathe {
+  0%, 100% { filter: drop-shadow(0 0 30px rgba(255, 200, 200, 0.7)) drop-shadow(0 0 80px rgba(255, 50, 80, 0.5)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 50px rgba(255, 220, 220, 0.9)) drop-shadow(0 0 120px rgba(255, 80, 110, 0.7)); transform: scale(1.02); }
+}
+@keyframes hintPulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes flashBang { 0% { opacity: 0; } 15% { opacity: 0.95; } 100% { opacity: 0; } }
+@keyframes zoomOut { to { opacity: 0; transform: scale(1.4); filter: blur(12px); } }
+@keyframes shine { 0%, 55% { translate: -130% 0; } 85%, 100% { translate: 130% 0; } }
+@keyframes pulse { 0%, 100% { scale: 1; } 50% { scale: 1.5; } }
+@keyframes ecg { to { transform: translateX(-50%) scaleY(var(--amp, 1)); } from { transform: translateX(0) scaleY(var(--amp, 1)); } }
+@keyframes tremble {
+  0% { transform: translate(calc(var(--s) * -2.5px), calc(var(--s) * 1.2px)); }
+  25% { transform: translate(calc(var(--s) * 2px), calc(var(--s) * -1.5px)); }
+  50% { transform: translate(calc(var(--s) * -1.5px), calc(var(--s) * -1px)); }
+  75% { transform: translate(calc(var(--s) * 2.5px), calc(var(--s) * 1px)); }
+  100% { transform: translate(calc(var(--s) * -2.5px), calc(var(--s) * 1.2px)); }
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes focusIn { from { opacity: 0; filter: blur(20px); letter-spacing: 0.15em; } to { opacity: 1; filter: blur(0); letter-spacing: normal; } }
+@keyframes archUp { from { opacity: 0; filter: blur(24px) brightness(2); clip-path: inset(60% 0 0 0); } to { opacity: 1; filter: none; clip-path: inset(-20% -20% -20% -20%); } }
+
+@media(hover: none) { .gal figure:hover img { transform: none; } }
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
+}
+</style>
+</head>
+<body class="is-loading">
+
+<!-- SVG Symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="flourish" viewBox="0 0 320 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+    <path d="M0 12H118M202 12H320"/><path d="M160 3l9 9-9 9-9-9z" fill="currentColor"/><path d="M132 12l4-4 4 4-4 4zM180 12l4-4 4 4-4 4z" fill="currentColor"/><path d="M118 12h8M194 12h8" opacity=".6"/>
+  </symbol>
+</svg>
+
+<!-- Atmosphere Layers -->
+<div class="bg-gradient"></div>
+<div class="velvet-overlay"></div>
+<div class="rays"></div>
+<canvas id="embers" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<!-- ══════ FIERCE LOADER ══════ -->
+<div id="loader" aria-label="กำลังโหลด">
+  <div class="loader-content">
+    <div class="hand left-hand">
+      <img data-preload src="https://i.postimg.cc/SsF9WQtZ/mi-m-ch-x-273-di-r-bka-rk-kh-nlae-w-20260919091253.png" alt="มือซ้าย">
+    </div>
+    <div class="eyes-center">
+      <img data-preload src="https://i.postimg.cc/Zqy3Bvjb/mi-m-ch-x-273-di-r-bka-rk-kh-nlae-w-20260919091110.png" alt="ดวงตา">
+    </div>
+    <div class="hand right-hand">
+      <img data-preload src="https://i.postimg.cc/SsF9WQtZ/mi-m-ch-x-273-di-r-bka-rk-kh-nlae-w-20260919091253.png" alt="มือขวา" style="transform: scaleX(-1);">
+    </div>
+  </div>
+  
+  <div class="loader-progress">
+    <div class="progress-text"><span id="pct">0</span><small>%</small></div>
+    <div class="progress-line" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-fill" id="p-fill"></div>
+      <div class="progress-glow"></div>
+    </div>
+    <div class="loading-hint">กำลังเตรียมพิธีกรรม...</div>
+  </div>
+  
+  <div class="loader-flash"></div>
+</div>
+
+<!-- ══════ NAV ══════ -->
+<nav class="nav" aria-label="เมนูหน้า">
+  <a href="#top" data-s="top">หน้าแรก</a>
+  <a href="#info" data-s="info">ข้อมูล</a>
+  <a href="#look" data-s="look">รูปลักษณ์</a>
+  <a href="#story" data-s="story">ประวัติ</a>
+  <a href="#combat" data-s="combat">การต่อสู้</a>
+  <a href="#gallery" data-s="gallery">รูปภาพ</a>
+</nav>
+
+<main>
+<!-- ══════ HERO ══════ -->
+<header class="hero" id="top">
+  <img class="deco top" data-preload alt="" aria-hidden="true" src="https://i.postimg.cc/wvGV8YW5/mi-m-ch-x-273-di-r-bka-rk-kh-nlae-w-20260919085004.png">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="kicker" style="--d:0.05"><span>ʕ•ᴥ•ʔ</span> Character Form <span>ʕ•ᴥ•ʔ</span></p>
+      <p class="war" style="--d:0.15">⋆｡˚ ✦ สงครามแห่งศรัทธา ✦ ˚｡⋆</p>
+      <h1 class="name" style="--d:0.3"><span>Mr.พิทักษ์ทอง</span><span>บานันหยาน</span></h1>
+      <p class="name-en" style="--d:0.7">Mr. Phitakthong Bananyan</p>
+      <blockquote class="hero-quote" style="--d:0.9;">“ชะตาคือสิ่งที่พระเจ้าได้กำหนดขึ้นมาเเล้ว. . .”</blockquote>
+      <ul class="chips" style="--d:1.1">
+        <li>ชื่อเล่น <b>กล้วย</b></li>
+        <li>ฝ่าย <b>คลั่งศาสนา</b></li>
+        <li>บทบาท <b>เชฟ ♨</b></li>
+      </ul>
+    </div>
+    <figure class="arch" style="--d:0.5">
+      <div class="arch-halo"></div>
+      <div class="arch-frame">
+        <div class="arch-in">
+          <img data-preload fetchpriority="high" alt="รูปตัวกล้วย" src="https://i.postimg.cc/hjF6FxfR/IMG-3621.png">
+        </div>
+      </div>
+    </figure>
+  </div>
+</header>
+
+<!-- ══════ INFO ══════ -->
+<section class="section" id="info" data-sec>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title">ข้อมูลตัวละคร</h2>
+      <p class="sec-sub">Profile</p>
+      <svg class="flourish"><use href="#flourish"/></svg>
+    </div>
+    <div class="panel menu-panel rv">
+      <dl class="menu">
+        <div class="row"><dt>ชื่อ</dt><i class="lead"></i><dd>Mr.พิทักษ์ทอง บานันหยาน<small>Mr. Phitakthong Bananyan</small></dd></div>
+        <div class="row"><dt>ชื่อเล่น</dt><i class="lead"></i><dd>กล้วย</dd></div>
+        <div class="row"><dt>อายุ</dt><i class="lead"></i><dd>38 ปี</dd></div>
+        <div class="row"><dt>เพศ</dt><i class="lead"></i><dd>ชาย</dd></div>
+        <div class="row"><dt>ส่วนสูง</dt><i class="lead"></i><dd>187 ซม.</dd></div>
+        <div class="row"><dt>น้ำหนัก</dt><i class="lead"></i><dd>78 กก.</dd></div>
+        <div class="row"><dt>ฝ่าย</dt><i class="lead"></i><dd><span class="pill">คลั่งศาสนา</span></dd></div>
+        <div class="row"><dt>บทบาท</dt><i class="lead"></i><dd>เชฟ ♨</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ LOOK ══════ -->
+<section class="section" id="look" data-sec>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title">รูปลักษณ์</h2>
+      <p class="sec-sub">Appearance</p>
+      <svg class="flourish"><use href="#flourish"/></svg>
+    </div>
+    <div class="grid">
+      <div class="panel s12 rv">
+        <h3>ลักษณะภายนอก</h3>
+        <p>ชายร่างสูงโปร่ง ผิวขาวซีด ใบหน้าเรียวคม ท่าทางอ่อนโยนแต่แฝงความอ่อนล้า สีหน้านิ่งสงบ ริมฝีปากปิดสนิท สายตามักมองต่ำ ทำให้ดูเหมือนคนที่เก็บเรื่องราวไว้มากกว่าที่พูดออกมา</p>
+      </div>
+      <div class="panel s6 rv">
+        <h3>ทรงผม / สีผม</h3>
+        <p>สีบลอนด์ทอง ทรงสั้น ยุ่งเล็กน้อยและฟู ปอยผมปรกหน้าผากและบังดวงตาบางส่วน ด้านหลังยาวจรดต้นคอ</p>
+      </div>
+      <div class="panel s6 rv">
+        <h3>สีตา</h3>
+        <p>Baby blue eyes ฟ้าอ่อนอมเทา ใต้ตามีเงาคล้ำ ขอบตาแดงเรื่อ ดูเหนื่อยล้าและเศร้าเบาๆ</p>
+      </div>
+      <div class="panel s6 rv">
+        <h3>การแต่งกาย</h3>
+        <p>เชิ้ตสีขาวปกกว้าง ตัวหลวมเล็กน้อย ปลายแขนเสื้อพับหรือปล่อยหลวมจนเห็นผ้าพันแผลที่ข้อมือ สวมต่างหูเงินที่ใบหู (ห่วงและตุ้มเล็ก รวมหลายจุด) และแหวนเงินที่นิ้ว 2 วง (วงหนึ่งเป็นแถบเรียบ อีกวงมีลวดลายนูนคล้ายกลีบดอกไม้) ให้ความรู้สึกสะอาด เรียบร้อย ตามภาพลักษณ์ของผู้ศรัทธา</p>
+      </div>
+      <div class="panel s6 rv">
+        <h3>ลักษณะเด่น</h3>
+        <ul style="list-style:none; padding:0; margin:0; display:grid; gap:0.8rem;">
+          <li style="position:relative; padding-left:1.5rem;">✦ รอยแผลเป็นยาวพาดขวางกลางใบหน้า ผ่านสันจมูกและใต้ดวงตาทั้งสองข้าง</li>
+          <li style="position:relative; padding-left:1.5rem;">✦ รอยแผลเป็นเย็บเป็นแนววนรอบลำคอ เห็นรอยเย็บชัดเจน</li>
+          <li style="position:relative; padding-left:1.5rem;">✦ บาดแผลที่ข้อมือ มีผ้าพันปิดไว้</li>
+          <li style="position:relative; padding-left:1.5rem;">✦ ท่าทางชอบยกมือแตะบริเวณลำคอ เหมือนเป็นนิสัยที่ทำโดยไม่รู้ตัว</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ STORY ══════ -->
+<section class="section" id="story" data-sec>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title">บุคลิกและประวัติ</h2>
+      <p class="sec-sub">Temperament & History</p>
+      <svg class="flourish"><use href="#flourish"/></svg>
+    </div>
+    <div class="grid">
+      <div class="panel s5 rv">
+        <h3>นิสัย</h3>
+        <p>นุ่มนิ่ม อ่อนโยน พูดจาสุภาพและใจเย็นอยู่เสมอ แต่ภายใต้ความนุ่มนวลนั้นคือ <em>A deceptive mindset</em> ชุดความคิดที่บิดเบี้ยวและหลอกทั้งคนรอบข้างกับตัวเขาเอง เขาไม่ได้โกหกโดยตั้งใจ เพราะเชื่อทุกอย่างที่พูดออกมาจริงๆ</p>
+      </div>
+      <div class="panel s7 rv">
+        <h3>ภูมิหลัง</h3>
+        <p>พ่อแม่ปลูกฝังเรื่องศาสนาให้เขามาตลอดอย่างบ้าคลั่ง ด้วยความเชื่อว่าพระเจ้าจะเลือกเราเสมอเมื่อเราบริสุทธิ์และศรัทธาโดยไม่ตั้งคำถาม ท่านจะให้พรและมอบสิ่งดีๆ ให้ กล้วยเป็นเด็กที่เชื่อสนิท เพราะไม่เคยได้เห็นโลกภายนอกจริงๆ เขาถูกหล่อหลอมซ้ำๆ จนความคิดฝังลึกลงไปว่า ชะตาเป็นสิ่งที่นำพาทุกอย่าง และพรจะมาถึงเพราะเป็นคนดี</p>
+      </div>
+    </div>
+
+    <blockquote class="pull rv">Repeatedly distorting thoughts and constantly reinforcing them.....</blockquote>
+
+    <div class="sec-head rv" style="margin-bottom:0">
+      <h3 class="sec-title" style="font-size:clamp(1.6rem, 1.1rem + 1.5vw, 2.8rem)">ประวัติ</h3>
+    </div>
+    <ol class="timeline">
+      <li class="rv"><span class="node"></span><h4>วัยเด็ก</h4><p>เติบโตในบ้านที่ปิดกั้นโลกภายนอก ถูกสอนให้ท่องบทสวดและทำตามพิธีกรรมทุกวัน แม่สอนให้ทำอาหาร โดยบอกว่าการทำอาหารคือการบูชาพระเจ้า</p></li>
+      <li class="rv"><span class="node"></span><h4>วัยรุ่น</h4><p>ถูกทดสอบความศรัทธาและถูกลงโทษเมื่อทำผิดกฎ รอยแผลที่ใบหน้า ลำคอ และข้อมือเกิดขึ้นในช่วงนี้ เขาตีความมันว่าเป็นบททดสอบจากพระเจ้า ไม่ใช่ความรุนแรง</p></li>
+      <li class="rv"><span class="node"></span><h4>วัยผู้ใหญ่</h4><p>ออกมาทำงานเป็นเชฟ ยังคงทำอาหารด้วยพิธีกรรมเดิม ทั้งสวดก่อนลงมือและเลือกวัตถุดิบตามความเชื่อ เพราะเชื่อว่าถ้าทำถูกต้อง พระเจ้าจะมอบสิ่งดีๆ ให้</p></li>
+      <li class="rv"><span class="node"></span><h4>ปัจจุบัน</h4><p>เข้าร่วมสงครามด้วยความเชื่อเดิม โดยยังไม่เคยตั้งคำถามกับมันเลย</p></li>
+    </ol>
+
+    <div class="grid" style="margin-top:clamp(3rem, 6vw, 6rem)">
+      <div class="panel s6 rv">
+        <h3>เป้าหมาย</h3>
+        <p style="font-family:var(--font-latin); font-style:italic; font-size:clamp(1.4rem, 1.1rem + 1vw, 2.2rem); color:#fff; text-shadow:var(--glow-text); margin-bottom:0.5rem;">Distorted state</p>
+        <p>ดำเนินชีวิตและทำอาหารตามที่ถูกสอนมา เพราะเชื่อว่าถ้าทำเช่นนี้ พระเจ้าจะมอบสิ่งดีๆ ให้</p>
+      </div>
+      <div class="panel s6 rv">
+        <h3>เหตุผลที่เข้าร่วมฝ่าย</h3>
+        <p style="font-family:var(--font-latin); font-style:italic; font-size:clamp(1.4rem, 1.1rem + 1vw, 2.2rem); color:#fff; text-shadow:var(--glow-text); margin-bottom:0.5rem;">It is unclear....</p>
+        <p style="color:var(--text-mist); font-size:0.95rem;">(เขาเองก็ไม่แน่ใจว่าเลือกฝ่ายนี้เพราะศรัทธาจริงๆ หรือเพราะไม่เคยรู้จักทางอื่น)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<img class="deco mid" data-preload alt="" aria-hidden="true" src="https://i.postimg.cc/B6Vg9fhg/mi-m-ch-x-273-di-r-bka-rk-kh-nlae-w-20260919085922.png">
+
+<!-- ══════ COMBAT ══════ -->
+<section class="section" id="combat" data-sec>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title">การต่อสู้</h2>
+      <p class="sec-sub">Combat</p>
+      <svg class="flourish"><use href="#flourish"/></svg>
+    </div>
+    <div class="grid">
+      <div class="panel s6 rv">
+        <div class="wpn">
+          <svg class="icon" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M16 104L98 22"/><ellipse cx="103" cy="17" rx="3.2" ry="8" transform="rotate(45 103 17)"/><circle cx="60" cy="60" r="40" opacity=".2"/></svg>
+          <div>
+            <h3>อาวุธหลัก</h3>
+            <p>เข็มเล็กปลายแหลม ใช้ในครัวสำหรับกดจุดบริเวณท้ายทอยของไก่ให้สลบและสิ้นใจโดยเร็ว หากจำเป็นก็ใช้ป้องกันตัวในระยะประชิดได้ <span style="color:var(--text-mist); font-size:0.9em;">(ทำให้บาดเจ็บและเจ็บปวด ไม่ได้ทำให้ล้มทันทีหรือตายได้ในเสี้ยววินาที)</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="panel s6 rv">
+        <div class="wpn">
+          <svg class="icon" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 10Q60 100 102 10"/><path d="M60 57v8"/><circle cx="60" cy="82" r="17"/><path d="M52 82h16"/></svg>
+          <div>
+            <h3>อาวุธรอง</h3>
+            <p>สร้อยคอ จี้กลวงมีช่องซ่อนอยู่ข้างใน ใช้เก็บเข็มสำรอง</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel s5 rv">
+        <h3>ความถนัด</h3>
+        <svg class="icon" style="width:3.5rem; margin:0.3rem 0 0.8rem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M60 12C82 12 96 50 96 74c0 22-16 34-36 34S24 96 24 74C24 50 38 12 60 12z"/><path d="M42 52q4-14 14-20"/></svg>
+        <p>ทำอาหาร โดยเฉพาะเมนูไข่ และเมนูบำรุงกำลังที่ถนัดเป็นพิเศษ ♨</p>
+      </div>
+      <div class="panel s7 rv">
+        <h3>ความสามารถ</h3>
+        <p>ทำอาหารที่ช่วยให้ร่างกายมีพลังงานและกระปรี้กระเปร่าขึ้นได้จริง เช่น อาหารโปรตีนสูงและคาร์บที่ย่อยง่าย ใช้ก่อนการต่อสู้หรือหลังเหนื่อยล้า แต่เป็นเพียงการเสริมสมรรถภาพตามปกติของมนุษย์ ไม่ได้ทำให้เก่งเกินขีดจำกัด</p>
+      </div>
+
+      <div class="panel s4 rv">
+        <h3>จุดแข็ง</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:0.8rem; margin-top:0.5rem;">
+          <span style="padding:0.3rem 1.2rem; border:1px solid rgba(255,255,255,0.7); border-radius:0.3rem; color:#fff; text-shadow:var(--glow-text); box-shadow:0 0 1.5rem rgba(255,190,190,0.4), inset 0 0 1.5rem rgba(255,255,255,0.1);">คิดไว</span>
+          <span style="padding:0.3rem 1.2rem; border:1px solid rgba(255,255,255,0.7); border-radius:0.3rem; color:#fff; text-shadow:var(--glow-text); box-shadow:0 0 1.5rem rgba(255,190,190,0.4), inset 0 0 1.5rem rgba(255,255,255,0.1);">มือไว</span>
+        </div>
+      </div>
+      <div class="panel s8 rv gauge" id="gauge" style="--s:0.12">
+        <h3>จุดอ่อน</h3>
+        <p>เมื่อถูกกดดันจนต้องทำงานเร็วเกินไป สมองจะประมวลผลไม่ทัน เริ่มหยุดคิด มือสั่น หายใจถี่ และมีโอกาสสูงที่จะหน้ามืดหรือเป็นลม</p>
+        <div class="gauge-scene">
+          <div class="ecg-win" id="ecgWin">
+            <svg class="ecg" id="ecg" viewBox="0 0 800 80" preserveAspectRatio="none" aria-hidden="true">
+              <path id="ecgPath" d="M0 40H56l8-7 8 7H92l6 6 9-40 10 68 8-34H146q10-12 20 0H200 M200 40H256l8-7 8 7H292l6 6 9-40 10 68 8-34H346q10-12 20 0H400 M400 40H456l8-7 8 7H492l6 6 9-40 10 68 8-34H546q10-12 20 0H600 M600 40H656l8-7 8 7H692l6 6 9-40 10 68 8-34H746q10-12 20 0H800"/>
+            </svg>
+          </div>
+          <div style="margin-top:1rem; min-height:4rem;">
+            <b id="gState" style="display:block; font-family:var(--font-display); font-size:clamp(1.3rem, 1rem + 1vw, 2rem); color:#fff; text-shadow:var(--glow-text);">จังหวะปกติ</b>
+            <span id="gDesc" style="color:var(--text-mist); font-size:0.95rem;">ทำงานตามจังหวะของตัวเอง</span>
+          </div>
+        </div>
+        <label class="ctl">
+          <span>ลองเพิ่มความกดดัน</span>
+          <input id="gRange" type="range" min="0" max="100" value="12">
+          <output id="gOut" for="gRange">12</output>
+        </label>
+      </div>
+    </div>
+
+    <aside class="rule rv" aria-label="กฎของตัวละคร">
+      <svg viewBox="0 0 48 44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M24 4L45 40H3z"/><path d="M24 17v11M24 34v.5"/></svg>
+      <p><b>กฎ:</b> ตัวละครต้องเป็นมนุษย์ธรรมดา ไม่มีเวทมนตร์ พลังพิเศษ หรือระบบสกิล และต้องอยู่ภายใต้ข้อจำกัดทางร่างกายตามความเป็นจริง</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ══════ GALLERY ══════ -->
+<section class="section" id="gallery" data-sec>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 class="sec-title">รูปภาพตัวละคร</h2>
+      <p class="sec-sub">Portraits</p>
+      <svg class="flourish"><use href="#flourish"/></svg>
+    </div>
+    <p class="cap rv">รูปตัวกล้วย “ชะตาคือสิ่งที่พระเจ้าได้กำหนดขึ้นมาเเล้ว. . .”</p>
+    <div class="gal rv" id="gal">
+      <figure tabindex="0" role="button" aria-label="ดูรูปที่ 1"><img loading="lazy" decoding="async" alt="รูปตัวกล้วย ภาพที่ 1" src="https://i.postimg.cc/hjF6FxfR/IMG-3621.png"></figure>
+      <figure tabindex="0" role="button" aria-label="ดูรูปที่ 2"><img loading="lazy" decoding="async" alt="รูปตัวกล้วย ภาพที่ 2" src="https://i.postimg.cc/Tw8F8mpY/IMG-3622.png"></figure>
+      <figure tabindex="0" role="button" aria-label="ดูรูปที่ 3"><img loading="lazy" decoding="async" alt="รูปตัวกล้วย ภาพที่ 3" src="https://i.postimg.cc/zBm6mWVB/IMG-3623.png"></figure>
+      <figure tabindex="0" role="button" aria-label="ดูรูปที่ 4"><img loading="lazy" decoding="async" alt="รูปตัวกล้วย ภาพที่ 4" src="https://i.postimg.cc/QtLwL5HD/IMG-3624.jpg"></figure>
+      <figure tabindex="0" role="button" aria-label="ดูรูปที่ 5"><img loading="lazy" decoding="async" alt="รูปตัวกล้วย ภาพที่ 5" src="https://i.postimg.cc/26pMpvVy/IMG-3625.png"></figure>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <img class="deco mid" data-preload alt="" aria-hidden="true" style="margin-bottom:2rem" src="https://i.postimg.cc/SsvrFbZG/mi-m-ch-x-273-di-r-bka-rk-kh-nlae-w-20260919090425.png">
+  <div class="wrap">
+    <svg class="flourish" style="margin-bottom:1.5rem"><use href="#flourish"/></svg>
+    <p class="sign">⊂ʕ•ᴥ•ʔ⊃ &nbsp;✦&nbsp; ʕ•ᴥ•ʔっ</p>
+    <button class="btn" id="replay" type="button">เล่นฉากเปิดอีกครั้ง</button>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const body = document.body;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Loader Logic ──
+  const loader = $('#loader');
+  const pctEl = $('#pct');
+  const pFill = $('#p-fill');
+  const bar = $('.progress-line');
+  
+  let running = false, skipReq = false, raf = 0, lastPct = -1;
+
+  function paint(p) {
+    const n = Math.round(p * 100);
+    if (n !== lastPct) {
+      lastPct = n;
+      pctEl.textContent = n;
+      pFill.style.width = n + '%';
+      if (n % 5 === 0) bar.setAttribute('aria-valuenow', n);
+    }
+  }
+
+  function finish() {
+    loader.classList.add('flash');
+    setTimeout(() => {
+      loader.classList.add('is-done');
+      body.classList.add('is-ready');
+      body.classList.remove('is-loading');
+      running = false;
+    }, reduce ? 100 : 800);
+  }
+
+  function runIntro() {
+    if (running) return;
+    running = true;
+    skipReq = false;
+    lastPct = -1;
+    
+    body.classList.add('is-loading');
+    body.classList.remove('is-ready');
+    loader.classList.remove('is-done', 'flash');
+    
+    // Trigger animations
+    requestAnimationFrame(() => {
+      loader.classList.add('active');
+    });
+
+    const imgs = $$('img[data-preload]');
+    let settled = 0;
+    const total = imgs.length || 1;
+    
+    imgs.forEach(img => {
+      if (img.complete) settled++;
+      else ['load', 'error'].forEach(ev => img.addEventListener(ev, () => settled++, { once: true }));
+    });
+
+    const MIN = reduce ? 500 : 3500;
+    const MAX = 9000;
+    const t0 = performance.now();
+    let last = t0, shown = 0;
+
+    const tick = now => {
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      const el = now - t0;
+      
+      const real = Math.min(1, 0.1 + 0.8 * (settled / total));
+      const x = Math.min(1, el / MIN);
+      const ramp = x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+      
+      let target = Math.min(real, ramp);
+      if (el > MAX || skipReq) target = 1;
+      
+      shown += (target - shown) * (1 - Math.exp(-dt * (skipReq ? 15 : 6)));
+      if (target >= 1 && shown > 0.99) shown = 1;
+      
+      paint(shown);
+      
+      if (shown >= 1) {
+        finish();
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    
+    raf = requestAnimationFrame(tick);
+  }
+
+  $('#replay').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    runIntro();
+  });
+
+  // Start loader
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runIntro);
+  } else {
+    runIntro();
+  }
+
+  // ── Scroll Reveal ──
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -5% 0px', threshold: 0.1 });
+    $$('.rv').forEach(e => io.observe(e));
+  } else {
+    $$('.rv').forEach(e => e.classList.add('in'));
+  }
+
+  // ── Nav Active State ──
+  const links = $$('.nav a');
+  const secs = ['top', 'info', 'look', 'story', 'combat', 'gallery'].map(id => document.getElementById(id));
+  let st = false;
+  
+  const onScroll = () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    let cur = 'top';
+    secs.forEach(s => {
+      if (s && s.getBoundingClientRect().top < window.innerHeight * 0.4) cur = s.id;
+    });
+    links.forEach(a => a.classList.toggle('on', a.dataset.s === cur));
+    st = false;
+  };
+  
+  window.addEventListener('scroll', () => {
+    if (!st) { st = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  onScroll();
+
+  // ── Embers Particle System ──
+  const c = $('#embers');
+  if (c) {
+    const ctx = c.getContext('2d');
+    let w, h, dpr, P = [], alive = true;
+    
+    const spawn = init => ({
+      x: Math.random() * w,
+      y: init ? Math.random() * h : h + 20 * dpr,
+      r: (Math.random() * 1.5 + 0.3) * dpr,
+      vy: -(Math.random() * 0.4 + 0.1) * dpr,
+      vx: (Math.random() - 0.5) * 0.2 * dpr,
+      ph: Math.random() * 6.28,
+      tw: Math.random() * 0.03 + 0.01,
+      a: Math.random() * 0.6 + 0.2,
+      rose: Math.random() < 0.4
+    });
+    
+    const size = () => {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      w = c.width = window.innerWidth * dpr;
+      h = c.height = window.innerHeight * dpr;
+      P = Array.from({ length: Math.min(120, Math.round(window.innerWidth * window.innerHeight / 20000)) }, () => spawn(true));
+    };
+    
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'lighter';
+      for (const p of P) {
+        p.ph += p.tw;
+        if (!reduce) {
+          p.x += p.vx + Math.sin(p.ph) * 0.15 * dpr;
+          p.y += p.vy;
+          if (p.y < -20 * dpr) Object.assign(p, spawn(false));
+        }
+        const a = p.a * (0.5 + 0.5 * Math.sin(p.ph * 6));
+        const col = p.rose ? '255,140,150' : '255,240,235';
+        
+        ctx.fillStyle = `rgba(${col},${a * 0.2})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 4, 0, 6.283);
+        ctx.fill();
+        
+        ctx.fillStyle = `rgba(${col},${a})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, 6.283);
+        ctx.fill();
+      }
+    };
+    
+    const loop = () => {
+      if (alive) draw();
+      requestAnimationFrame(loop);
+    };
+    
+    size();
+    window.addEventListener('resize', size);
+    document.addEventListener('visibilitychange', () => alive = !document.hidden);
+    if (reduce) draw(); else loop();
+  }
+
+  // ── Combat Gauge Interaction ──
+  const gRange = $('#gRange');
+  if (gRange) {
+    const g = $('#gauge');
+    const out = $('#gOut');
+    const win = $('#ecgWin');
+    const st = $('#gState');
+    const ds = $('#gDesc');
+    
+    const STATES = [
+      [0, 'จังหวะปกติ', 'ทำงานตามจังหวะของตัวเอง คิดไวและมือไว'],
+      [20, 'เริ่มหยุดคิด', 'สมองประมวลผลไม่ทัน'],
+      [45, 'มือสั่น', 'มือเริ่มสั่นเมื่อต้องเร่งงาน'],
+      [70, 'หายใจถี่', 'ลมหายใจสั้นและถี่ขึ้น'],
+      [90, 'หน้ามืด', 'มีโอกาสสูงที่จะหน้ามืดหรือเป็นลม']
+    ];
+    
+    const upd = () => {
+      const v = +gRange.value;
+      const s = v / 100;
+      let cur = STATES[0];
+      STATES.forEach(x => { if (v >= x[0]) cur = x; });
+      
+      g.style.setProperty('--s', s);
+      gRange.style.setProperty('--fill', v + '%');
+      out.textContent = v;
+      
+      const amp = (0.7 + s * 0.5).toFixed(2);
+      const beat = (2.9 - 2.45 * s).toFixed(2) + 's';
+      win.style.setProperty('--amp', amp);
+      $('#ecg').style.setProperty('--amp', amp);
+      $('#ecg').style.setProperty('--beat', beat);
+      
+      st.textContent = cur[1];
+      ds.textContent = cur[2];
+      
+      g.classList.toggle('shaky', v >= 45 && v < 90 && !reduce);
+      g.classList.toggle('faint', v >= 90);
+    };
+    
+    gRange.addEventListener('input', upd);
+    upd();
+  }
+
+  // ── Gallery Lightbox ──
+  const figs = $$('#gal figure');
+  if (figs.length > 0) {
+    // Simple click to open in new tab for elegance and simplicity
+    figs.forEach(f => {
+      f.addEventListener('click', () => {
+        const img = f.querySelector('img');
+        if (img && img.src) {
+          window.open(img.src, '_blank');
+        }
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
