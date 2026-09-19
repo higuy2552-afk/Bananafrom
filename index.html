@@ -1148,3 +1148,317 @@ footer .sign { font-size: clamp(1.4rem, 1.1rem + 1vw, 2.4rem); color: #fff; text
 </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luxurious Music Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Thai:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0103;
+    --accent-red: #ff4d6d;
+    --glow-red: rgba(255, 77, 109, 0.6);
+    --text-pearl: rgba(255, 244, 240, 0.95);
+    --text-mist: rgba(255, 232, 226, 0.7);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: var(--bg-deep);
+    font-family: 'Noto Serif Thai', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: var(--text-pearl);
+  }
+
+  /* ───────── Music Player Widget ───────── */
+  .music-widget {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.2rem 0.8rem 0.8rem;
+    background: rgba(26, 5, 8, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 232, 226, 0.15);
+    border-radius: 999px;
+    box-shadow: 0 10px 40px -10px #000, 0 0 30px -8px var(--glow-red);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .music-widget:hover {
+    background: rgba(45, 10, 16, 0.8);
+    border-color: rgba(255, 232, 226, 0.3);
+    box-shadow: 0 15px 50px -10px #000, 0 0 40px -5px var(--glow-red);
+    transform: translateY(-2px);
+  }
+
+  /* ปุ่ม Play/Pause */
+  .play-btn {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .play-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    box-shadow: 0 0 15px var(--glow-red);
+  }
+
+  .play-btn svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+  }
+
+  .play-btn.playing svg {
+    transform: scale(0.9);
+  }
+
+  /* เอฟเฟกต์คลื่นเสียงตอนเล่น */
+  .music-widget.playing .play-btn::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-red);
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+  /* ข้อมูลเพลง */
+  .track-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+  }
+
+  .track-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.05em;
+  }
+
+  .track-status {
+    font-size: 0.75rem;
+    color: var(--text-mist);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.15rem;
+  }
+
+  /* Equalizer Animation (แท่งเล็กๆ กระดิก) */
+  .equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .music-widget.playing .equalizer { opacity: 1; }
+  
+  .bar {
+    width: 2px;
+    background: var(--accent-red);
+    border-radius: 1px;
+    animation: equalize 1s ease-in-out infinite;
+  }
+  .bar:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+  .bar:nth-child(2) { height: 80%; animation-delay: 0.3s; }
+  .bar:nth-child(3) { height: 60%; animation-delay: 0.5s; }
+  .bar:nth-child(4) { height: 90%; animation-delay: 0.2s; }
+
+  /* Loop Icon */
+  .loop-indicator {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    background: var(--accent-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 8px var(--glow-red);
+  }
+  .loop-indicator svg {
+    width: 10px;
+    height: 10px;
+    fill: #fff;
+  }
+
+  /* ───────── Keyframes ───────── */
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  @keyframes equalize {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .music-widget {
+      bottom: 1rem;
+      right: 1rem;
+      left: 1rem;
+      justify-content: space-between;
+    }
+    .track-info { min-width: auto; flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ══════ MUSIC PLAYER WIDGET ══════ -->
+  <div class="music-widget" id="musicWidget">
+    <button class="play-btn" id="playBtn" aria-label="เล่นหรือหยุดเพลง">
+      <!-- Play Icon -->
+      <svg id="iconPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      <!-- Pause Icon (ซ่อนไว้ก่อน) -->
+      <svg id="iconPause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+      
+      <!-- Loop Indicator -->
+      <div class="loop-indicator" title="เล่นวนลูป">
+        <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+      </div>
+    </button>
+    
+    <div class="track-info">
+      <span class="track-title">สงครามแห่งศรัทธา</span>
+      <div class="track-status">
+        <div class="equalizer">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <span id="statusText">พร้อมเล่น</span>
+      </div>
+    </div>
+
+    <!-- Audio Element (ใช้ลิงก์ Direct จาก Google Drive) -->
+    <audio id="bgAudio" loop preload="auto">
+      <source src="https://drive.google.com/uc?export=download&id=1aAOmK8cPEAhuaO-RO9LtZvBGtePBVYMR" type="audio/mpeg">
+      เบราว์เซอร์ของคุณไม่รองรับการเล่นเสียง
+    </audio>
+  </div>
+
+<script>
+  const widget = document.getElementById('musicWidget');
+  const playBtn = document.getElementById('playBtn');
+  const iconPlay = document.getElementById('iconPlay');
+  const iconPause = document.getElementById('iconPause');
+  const statusText = document.getElementById('statusText');
+  const audio = document.getElementById('bgAudio');
+
+  let isPlaying = false;
+
+  // ฟังก์ชันสลับสถานะ เล่น/หยุด
+  function togglePlay() {
+    if (isPlaying) {
+      audio.pause();
+      isPlaying = false;
+      iconPlay.style.display = 'block';
+      iconPause.style.display = 'none';
+      playBtn.classList.remove('playing');
+      widget.classList.remove('playing');
+      statusText.textContent = 'หยุดชั่วคราว';
+    } else {
+      // พยายามเล่นเสียง
+      const playPromise = audio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlaying = true;
+          iconPlay.style.display = 'none';
+          iconPause.style.display = 'block';
+          playBtn.classList.add('playing');
+          widget.classList.add('playing');
+          statusText.textContent = 'กำลังเล่น...';
+        }).catch(error => {
+          console.log("Autoplay ถูกบล็อกโดยเบราว์เซอร์ ต้องให้ผู้ใช้คลิกก่อน", error);
+          statusText.textContent = 'คลิกเพื่อเล่น';
+        });
+      }
+    }
+  }
+
+  // คลิกที่ปุ่มหรือตัว Widget เพื่อเล่น/หยุด
+  playBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // ป้องกันการคลิกซ้อน
+    togglePlay();
+  });
+  
+  widget.addEventListener('click', () => {
+    if (!isPlaying) togglePlay();
+  });
+
+  // พยายาม Autoplay เมื่อโหลดหน้าเว็บ (เบราว์เซอร์สมัยใหม่อาจบล็อกถ้าไม่มีเสียงเงียบนำ หรือผู้ใช้ยังไม่โต้ตอบกับหน้าเว็บ)
+  window.addEventListener('load', () => {
+    // ตั้งค่าเสียงให้เบาลงเล็กน้อยตอนเริ่ม (Optional)
+    audio.volume = 0.7; 
+    
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        isPlaying = true;
+        iconPlay.style.display = 'none';
+        iconPause.style.display = 'block';
+        playBtn.classList.add('playing');
+        widget.classList.add('playing');
+        statusText.textContent = 'กำลังเล่น...';
+      }).catch(() => {
+        // ถ้าถูกบล็อก ให้รอการคลิกครั้งแรกของผู้ใช้ที่ใดก็ได้บนหน้าเว็บ
+        statusText.textContent = 'คลิกเพื่อเล่น';
+        const enableAudio = () => {
+          togglePlay();
+          document.removeEventListener('click', enableAudio);
+          document.removeEventListener('touchstart', enableAudio);
+        };
+        document.addEventListener('click', enableAudio);
+        document.addEventListener('touchstart', enableAudio);
+      });
+    }
+  });
+
+  // จัดการเมื่อเพลงจบ (แม้จะมี loop แล้ว แต่ใส่ไว้เพื่อความชัวร์)
+  audio.addEventListener('ended', () => {
+    audio.currentTime = 0;
+    audio.play();
+  });
+</script>
+
+</body>
+</html>
